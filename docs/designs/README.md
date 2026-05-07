@@ -14,12 +14,22 @@ gstack design + decision artifacts. Outputs of:
 
 ```yaml
 ---
-kind: design                # required
-linear-issue: DAT-N         # set by /promote-spec when promoted
-linear-project: <url>       # set by /promote-spec
+kind: design # required
+function: engineering | gtm | operations # required — see docs/README.md
+linear-issue: DAT-N # the Linear project's umbrella issue (set when project exists)
+linear-project: <url> # the Linear project this design backs (set when project exists)
 status: DRAFT|APPROVED|SUPERSEDED
 ---
 ```
+
+## H1 prefix
+
+`# <Function> Design: <Title>`. Examples:
+
+- `# Engineering Design: Phase 2 — Telegram Bot Architecture`
+- `# GTM Design: Founder's Beta Sampler — Validation Experiment`
+
+The function name in the H1 must match the `function:` value in FM.
 
 ## Relocation from gstack cache
 
