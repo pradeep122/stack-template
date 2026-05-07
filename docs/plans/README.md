@@ -15,14 +15,28 @@ This is the **canonical superpowers plan location** for this repo, overriding th
 
 ```yaml
 ---
-kind: plan                                          # required
-linear-issue: DAT-N                                 # set by /promote-spec
-linear-project: <linear-project-url>                # set by /promote-spec
-design-doc: docs/designs/YYYY-MM-DD-<slug>.md       # link back to the gstack design (optional)
+kind: plan # required
+function: engineering | gtm | operations # required — see docs/README.md
+linear-issue: DAT-N # set by /promote-spec
+linear-project: <linear-project-url> # set by /promote-spec
+linear-milestone: <linear-milestone-url> # set when this plan is a milestone in a larger project
+linear-milestones: # set when this plan IS a project with multiple milestones
+  - M1: <linear-milestone-url>
+  - M2: <linear-milestone-url>
+design-doc: docs/designs/YYYY-MM-DD-<slug>.md # link back to the gstack design (optional)
 created: YYYY-MM-DD
 status: ready
 ---
 ```
+
+## H1 prefix
+
+`# <Function>: <Plan Title>`. Examples:
+
+- `# Engineering: Phase 2 / M1 — Bot knows who you are`
+- `# GTM: Founder's Beta Sampler — Validation Experiment Plan`
+
+The function name in the H1 must match the `function:` value in FM.
 
 Plus the superpowers-required header line near the top:
 
