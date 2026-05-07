@@ -12,6 +12,29 @@ This was scaffolded from `pradeep122/stack-template` (which descends from `get-c
 | `packages/backend/` | Convex backend | Schema, queries, mutations, actions, scheduled functions. The source of truth for data. |
 | `packages/lib/` | Shared TS utilities | Pure functions used by 2+ apps. Vitest-tested. No DOM/RN imports here. |
 
+## Where the context lives (idea→design→plan)
+
+| Path                  | What it is                                                            | Who reads it                          |
+| --------------------- | --------------------------------------------------------------------- | ------------------------------------- |
+| `docs/idea.md`        | One-pager: problem, audience, hard constraints, current bet           | Everything. **Read first.**           |
+| `docs/designs/`       | gstack outputs (design consultations, autoplan TODOS, design reviews) | gstack skills, /promote-spec, Cyrus   |
+| `docs/plans/`         | superpowers executable phase plans                                    | superpowers, /promote-spec, Cyrus     |
+| `docs/knowledge/`     | Research, business plans, market notes — read-only baseline           | Reference only — don't edit casually  |
+| `docs/archived/`      | Archived; **NOT auto-loaded into context**                            | Nothing automatic — see below         |
+
+See `docs/README.md` for the full layout contract and per-folder naming rules.
+
+## Do not load
+
+`docs/archived/` is excluded from automatic context. Don't read or grep it unless explicitly pointed at a file there. If you find yourself wanting to load it, surface that and ask first — usually the live version is in `docs/idea.md` / `docs/plans/` / `docs/designs/`.
+
+## Tool routing (overrides skill defaults)
+
+- `superpowers:writing-plans` → write to `docs/plans/YYYY-MM-DD-<slug>.md` (NOT `docs/superpowers/plans/`).
+- `superpowers:executing-plans` → look in `docs/plans/` first, then `docs/superpowers/plans/` for legacy.
+- gstack `/design-consultation`, `/plan-*-review`, `/autoplan` → relocate the gstack-cache markdown to `docs/designs/YYYY-MM-DD-<slug>.md` as the final step (symlink back to `~/.gstack/projects/<slug>/`). State files (`timeline.jsonl`, `learnings.jsonl`) stay in `~/.gstack/`.
+- `/promote-spec` → already aware of `docs/plans/` and `docs/designs/`; will find both new locations.
+
 ## Priority order (strict)
 
 `maintainability > testability > modularity > composability` — when two designs trade off, pick the more obvious-in-six-months one over the cleverer one.
@@ -65,7 +88,7 @@ Move on. No code, no PR.
 
 1. **Find the plan file**:
    - If the issue has a parent issue, fetch the parent and look for `linear-issue:` frontmatter pointers in the parent's description. Otherwise, look at this issue's own description.
-   - In the worktree, search `docs/superpowers/plans/*.md` for a file with frontmatter `linear-issue: <this issue OR parent issue>`.
+   - In the worktree, search `docs/plans/*.md` for a file with frontmatter `linear-issue: <this issue OR parent issue>`. If not found, fall back to `docs/superpowers/plans/*.md` for legacy repos.
    - If 0 matches: post comment "no plan file found linked to this issue — run `/write-plan` then `/promote-spec` to set up the work" and stop.
    - If multiple: pick the most recent by mtime; mention the choice in the working comment.
 
