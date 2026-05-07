@@ -1,0 +1,27 @@
+{
+  "name": "stack-template",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore"
+  },
+  "devDependencies": {
+    "prettier": "3.8.3",
+    "turbo": "2.9.6",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "pnpm@10.33.0"
+}

@@ -1,0 +1,6 @@
+[tools]
+node = "24.15.0"
+python = "3.13.13"
+
+[settings]
+experimental = true

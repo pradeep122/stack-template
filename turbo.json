@@ -1,0 +1,23 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local", ".env.tmpl"],
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {},
+    "typecheck": {},
+    "test": {
+      "outputs": ["coverage/**"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}
