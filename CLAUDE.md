@@ -93,8 +93,8 @@ Move on. No code, no PR.
    - If multiple: pick the most recent by mtime; mention the choice in the working comment.
 
 2. **Identify the phase** (only if this is a child issue):
-   - Child-issue titles look like `<parent title> — Phase N: <name>`.
-   - Find the matching `## Phase N — <name>` section in the plan file.
+   - Child-issue titles look like `[M#] <name>` (milestone-children) or `[S#] <name>` (stage-children). Legacy issues may use the older `<parent title> — Phase N: <name>` form — handle both.
+   - Find the matching plan section: `## Phase N — <name>`, `## Milestone M<N> — <name>`, or `## Stage N — <name>`. Pick whichever heading family matches the issue's prefix.
    - If you can't pin a single phase, run the *whole* plan from the current state (read the plan's `- [ ]` checkboxes; pick up where the last commit left off).
 
 3. **Execute**:
