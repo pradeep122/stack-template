@@ -21,7 +21,7 @@ Don't add when:
 
 Local dev: Claude Code OAuth (Max plan) via the `claude` CLI's auto-detected creds. No env var needed.
 
-Cloud / production worker: `ANTHROPIC_API_KEY` from `.env.tmpl` (`bw://anthropic/password`). Only fund when going to production.
+Cloud / production worker: `ANTHROPIC_API_KEY` from Infisical (`infisical run --env=prod -- ...`). Only fund when going to production.
 
 ## Conventions
 

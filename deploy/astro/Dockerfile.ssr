@@ -1,0 +1,31 @@
+# Build context: the Astro project root (pnpm-lock.yaml present, @astrojs/node adapter in standalone mode).
+# The project must expose GET /healthz (src/pages/healthz.ts returning "ok").
+#   docker build -f Dockerfile.ssr --build-arg PUBLIC_SITE_URL=https://example.com -t site .
+ARG NODE_VERSION=24
+
+FROM node:${NODE_VERSION}-alpine AS build
+ENV PNPM_HOME=/pnpm PATH=/pnpm:$PATH
+RUN corepack enable
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY . .
+# Public by definition: PUBLIC_* values are inlined into the shipped HTML/JS.
+ARG PUBLIC_SITE_URL
+ENV PUBLIC_SITE_URL=$PUBLIC_SITE_URL
+RUN pnpm build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm prune --prod --ignore-scripts
+
+FROM node:${NODE_VERSION}-alpine AS runtime
+ENV NODE_ENV=production HOST=0.0.0.0 PORT=8080
+WORKDIR /app
+COPY --from=build --chown=node:node /app/package.json ./
+COPY --from=build --chown=node:node /app/node_modules ./node_modules
+COPY --from=build --chown=node:node /app/dist ./dist
+RUN mkdir -p /data && chown node:node /data
+USER node
+VOLUME ["/data"]
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1
+CMD ["node", "dist/server/entry.mjs"]

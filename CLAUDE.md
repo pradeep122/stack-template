@@ -52,7 +52,7 @@ See `docs/README.md` for the full layout contract and per-folder naming rules.
 
 ## Secrets
 
-`.env.tmpl` (committed) declares `bw://item-name/field` references. Run dev with `bw-env .env.tmpl -- pnpm dev`. Never commit real `.env` files. Per-project Bitwarden item names follow the pattern `<service>-<project-slug>` (e.g. `clerk-medtracker`, `convex-medtracker`).
+Secrets live in the project's Infisical project (`<app>`, environments `dev`/`staging`/`prod`). `.infisical.json` (committed, project id only) points the CLI at it. Run dev with `infisical run --env=dev -- pnpm dev` (local address `INFISICAL_DOMAIN=http://127.0.0.1:8081` on the Mac Studio). Never commit real `.env` files and never put a secret on a command line. `.mcp.json` starts the Supabase and Convex MCP servers through `infisical run`, so their tokens arrive as environment variables.
 
 ## Common commands
 
